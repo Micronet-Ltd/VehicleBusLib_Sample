@@ -23,8 +23,15 @@
     <string name="transmit_can">Transmit CAN  Message</string>
     <string name="transmit_j1708">Transmit J1708 Message</string>
     <string name="_000k_desc">000 kbit/s</string>
+    <string name="_1m_desc">1000 kbit/s</string>
+    <string name="_800k_desc">800 kbit/s</string>
     <string name="_500k_desc">500 kbit/s</string>
     <string name="_250k_desc">250 kbit/s</string>
+    <string name="_125k_desc">125 kbit/s</string>
+    <string name="_100k_desc">100 kbit/s</string>
+    <string name="_50k_desc">50 kbit/s</string>
+    <string name="_20k_desc">20 kbit/s</string>
+    <string name="_10k_desc">10 kbit/s</string>
     <string name="_500k">500K</string>
     <string name="_250k">250K</string>
     <string name="silent_mode">Listen only</string>
@@ -56,4 +63,15 @@
     <string name="_3_on">3 On</string>
     <string name="blank"/>
 
+    <string-array name="bitrate_array">
+        <item>10K</item>
+        <item>20K</item>
+        <item>50K</item>
+        <item>100K</item>
+        <item>125K</item>
+        <item>250K</item>
+        <item>500K</item>
+        <item>800K</item>
+        <item>1M</item>
+    </string-array>
 </resources>

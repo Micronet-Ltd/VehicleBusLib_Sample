@@ -12,7 +12,6 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -25,10 +24,12 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.RadioGroup;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -51,8 +52,25 @@ public class Can1OverviewFragment extends Fragment {
     private Date LastCreated;
     private Date LastClosed;
 
+    private final String LABEL_10K = "10K";
+    private final String LABEL_20K = "20K";
+    private final String LABEL_50K = "50K";
+    private final String LABEL_100K = "100K";
+    private final String LABEL_125K = "125K";
+    private final String LABEL_250K = "250K";
+    private final String LABEL_500K = "500K";
+    private final String LABEL_800K = "800K";
+    private final String LABEL_1M = "1M";
+    private final int BITRATE_10K = 10000;
+    private final int BITRATE_20K = 20000;
+    private final int BITRATE_50K = 50000;
+    private final int BITRATE_100K = 100000;
+    private final int BITRATE_125K = 125000;
     private final int BITRATE_250K = 250000;
     private final int BITRATE_500K = 500000;
+    private final int BITRATE_800K = 800000;
+    private final int BITRATE_1M = 1000000;
+
     private boolean silentMode = false;
     private boolean termination = false;
 	private boolean filtersEnabled = false;
@@ -80,7 +98,7 @@ public class Can1OverviewFragment extends Fragment {
     //Interface dependent UI
     private ToggleButton toggleButtonTermCan1;
     private ToggleButton toggleButtonListenCan1;
-    private RadioGroup baudRateCan1;
+    private Spinner spinnerBitrateCan1;
     private ToggleButton toggleButtonFilterSetCan1;
     private ToggleButton toggleButtonFlowControlCan1;
 
@@ -139,7 +157,7 @@ public class Can1OverviewFragment extends Fragment {
         }
         toggleButtonTermCan1.setEnabled(uiElementEnabled);
         toggleButtonListenCan1.setEnabled(uiElementEnabled);
-        baudRateCan1.setEnabled(uiElementEnabled);
+        spinnerBitrateCan1.setEnabled(uiElementEnabled);
         toggleButtonFilterSetCan1.setEnabled(uiElementEnabled);
         toggleButtonFlowControlCan1.setEnabled(uiElementEnabled);
         openCan1.setEnabled(uiElementEnabled);
@@ -245,11 +263,36 @@ public class Can1OverviewFragment extends Fragment {
 
     private void updateBaudRateUI() {
         String baudRateDesc = getString(R.string._000k_desc);
-        if (canTest.getBaudRate() == BITRATE_250K) {
-            baudRateDesc = getString(R.string._250k_desc);
-        } else if (canTest.getBaudRate() == BITRATE_500K) {
-            baudRateDesc = getString(R.string._500k_desc);
+        switch (canTest.getBaudRate()) {
+            case BITRATE_10K:
+                baudRateDesc = getString(R.string._10k_desc);
+                break;
+            case BITRATE_20K:
+                baudRateDesc = getString(R.string._20k_desc);
+                break;
+            case BITRATE_50K:
+                baudRateDesc = getString(R.string._50k_desc);
+                break;
+            case BITRATE_100K:
+                baudRateDesc = getString(R.string._100k_desc);
+                break;
+            case BITRATE_125K:
+                baudRateDesc = getString(R.string._125k_desc);
+                break;
+            case BITRATE_250K:
+                baudRateDesc = getString(R.string._250k_desc);
+                break;
+            case BITRATE_500K:
+                baudRateDesc = getString(R.string._500k_desc);
+                break;
+            case BITRATE_800K:
+                baudRateDesc = getString(R.string._800k_desc);
+                break;
+            case BITRATE_1M:
+                baudRateDesc = getString(R.string._1m_desc);
+                break;
         }
+
         txtCanBaudRateCan1.setText(baudRateDesc);
     }
 
@@ -350,7 +393,7 @@ public class Can1OverviewFragment extends Fragment {
 
         textViewFramesRx = rootView.findViewById(R.id.textViewCan1FramesRx);
         textViewFramesTx = rootView.findViewById(R.id.textViewCan1FramesTx);
-        baudRateCan1 = rootView.findViewById(R.id.radioGrCan1BaudRates);
+        spinnerBitrateCan1 = rootView.findViewById(R.id.spinnerCan1);
         toggleButtonListenCan1 = rootView.findViewById(R.id.toggleButtonCan1Listen);
         toggleButtonTermCan1 = rootView.findViewById(R.id.toggleButtonCan1Term);
         toggleButtonFilterSetCan1 = rootView.findViewById(R.id.toggleButtonCan1Filters);
@@ -375,19 +418,54 @@ public class Can1OverviewFragment extends Fragment {
             }
         });
 
-        baudRateCan1.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-        {
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch(checkedId){
-                    case R.id.radio250K:
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.bitrate_array, R.layout.spinner_item);
+        adapter.setDropDownViewResource(R.layout.spinner_item);
+        // Apply the adapter to the spinner
+        spinnerBitrateCan1.setAdapter(adapter);
+        spinnerBitrateCan1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String text = spinnerBitrateCan1.getSelectedItem().toString();
+
+                switch(text) {
+                    case LABEL_10K:
+                        baudRateSelected = BITRATE_10K;
+                        break;
+                    case LABEL_20K:
+                        baudRateSelected = BITRATE_20K;
+                        break;
+                    case LABEL_50K:
+                        baudRateSelected = BITRATE_50K;
+                        break;
+                    case LABEL_100K:
+                        baudRateSelected = BITRATE_100K;
+                        break;
+                    case LABEL_125K:
+                        baudRateSelected = BITRATE_125K;
+                        break;
+                    case LABEL_250K:
                         baudRateSelected = BITRATE_250K;
                         break;
-                    case R.id.radio500K:
+                    case LABEL_500K:
                         baudRateSelected = BITRATE_500K;
+                        break;
+                    case LABEL_800K:
+                        baudRateSelected = BITRATE_800K;
+                        break;
+                    case LABEL_1M:
+                        baudRateSelected = BITRATE_1M;
                         break;
                 }
             }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
         });
+
+        // Default to 250K to start with.
+        spinnerBitrateCan1.setSelection(5);
 
         toggleButtonTermCan1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

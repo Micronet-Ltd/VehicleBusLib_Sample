@@ -45,33 +45,13 @@
             android:textColor="@android:color/black"
             android:textSize="10sp"/>
 
-        <RadioGroup
-          android:id="@+id/radioGrCan1BaudRates"
-          android:layout_width="150dp"
-          android:layout_height="wrap_content"
-          android:layout_alignStart="@+id/yAxis"
-          android:layout_alignTop="@+id/lblCan1ViewBaud"
-          android:orientation="horizontal">
+        <Spinner
+            android:id="@+id/spinnerCan1"
+            android:layout_width="120dp"
+            android:layout_height="25dp"
+            android:layout_alignStart="@+id/yAxis"
+            android:layout_alignTop="@+id/lblCan1ViewBaud" />
 
-            <RadioButton
-              android:id="@+id/radio250K"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:layout_weight="1"
-              android:checked="true"
-              android:text="@string/_250k"
-              android:textColor="@android:color/holo_orange_dark"
-              android:textSize="8sp"/>
-
-            <RadioButton
-              android:id="@+id/radio500K"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:layout_weight="1"
-              android:text="@string/_500k"
-              android:textColor="@android:color/holo_orange_dark"
-              android:textSize="8sp"/>
-        </RadioGroup>
         <TextView
             android:id="@+id/textViewCan1Silent"
             android:layout_width="wrap_content"
@@ -87,7 +67,7 @@
           android:layout_height="29dp"
           android:layout_marginTop="4dp"
           android:layout_alignLeft="@+id/yAxis"
-          android:layout_below="@+id/radioGrCan1BaudRates"
+          android:layout_below="@+id/spinnerCan1"
           android:text="ToggleButton"
           android:textColorLink="@android:color/holo_green_light"
           android:textSize="8sp"/>
@@ -106,7 +86,7 @@
           android:layout_width="79dp"
           android:layout_height="28dp"
           android:layout_marginTop="4dp"
-          android:layout_alignStart="@+id/radioGrCan1BaudRates"
+          android:layout_alignStart="@+id/spinnerCan1"
           android:layout_below="@+id/toggleButtonCan1Listen"
           android:text="ToggleButton"
           android:textSize="8sp"/>
@@ -125,7 +105,7 @@
           android:id="@+id/toggleButtonCan1Filters"
           android:layout_width="78dp"
           android:layout_height="28dp"
-          android:layout_alignStart="@+id/radioGrCan1BaudRates"
+          android:layout_alignStart="@+id/spinnerCan1"
           android:layout_below="@+id/toggleButtonCan1Term"
           android:text="ToggleButton"
           android:textSize="8sp"/>
@@ -144,7 +124,7 @@
           android:id="@+id/toggleButtonCan1FlowControl"
           android:layout_width="78dp"
           android:layout_height="28dp"
-          android:layout_alignStart="@+id/radioGrCan1BaudRates"
+          android:layout_alignStart="@+id/spinnerCan1"
           android:layout_below="@+id/toggleButtonCan1Filters"
           android:text="ToggleButton"
           android:textSize="8sp"/>
