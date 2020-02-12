@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="113dp">
+
+        <View
+          android:id="@+id/xAxis"
+          android:layout_width="match_parent"
+          android:layout_height="0dp"
+          android:layout_centerHorizontal="true"
+          android:layout_centerVertical="true"/>
+
+        <View
+          android:id="@+id/yAxis"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_alignParentTop="true"
+          android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:id="@+id/lblJ1708TransmitTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="Transmit 1708 Messages"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp"/>
+
+        <TextView
+          android:id="@+id/lblJ1708CycleTransmit"
+          android:layout_width="wrap_content"
+          android:layout_height="24dp"
+          android:layout_marginTop="3dp"
+          android:layout_below="@+id/lblJ1708TransmitTitle"
+          android:text="Cycle Transmit"
+          android:textColor="@android:color/black"
+          android:textSize="10sp"/>
+
+        <ToggleButton
+            android:id="@+id/swJ1708CycleTransmit"
+            android:layout_width="78dp"
+            android:layout_height="29dp"
+            android:layout_marginTop="3dp"
+            android:layout_alignLeft="@+id/yAxis"
+            android:layout_below="@+id/lblJ1708TransmitTitle"
+            android:text="Cycle Transmit Toggle Button"
+            android:textColorLink="@android:color/holo_green_light"
+            android:textSize="8sp"/>
+
+        <TextView
+            android:id="@+id/lblJ1708TransmitSpeed"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_marginTop="3dp"
+            android:layout_below="@+id/lblJ1708CycleTransmit"
+            android:text="J1708 Cycle Time (200-1000ms)"
+            android:textColor="@android:color/black"
+            android:textSize="10sp"/>
+        <SeekBar
+            android:id="@+id/seekBarJ1708SendSpeed"
+            android:layout_width="162dp"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/yAxis"
+            android:layout_centerVertical="true"
+            android:max="800"
+            android:maxHeight="5dip"
+            android:minHeight="5dip"/>
+
+        <TextView
+            android:id="@+id/textViewJ1708FramesTx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:layout_alignLeft="@+id/xAxis"
+            android:layout_below="@+id/lblJ1708TransmitSpeed"
+            android:text="Tx 0 Frames/0 Bytes"
+            android:textColor="@android:color/black"
+            android:textSize="10sp"/>
+
+        <Button
+            android:id="@+id/btnJ1708Send"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_marginTop="3dp"
+            android:layout_alignLeft="@+id/yAxis"
+            android:layout_below="@+id/lblJ1708TransmitSpeed"
+            android:background="@color/colorButtons"
+            android:text="@string/transmit_j1708"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textSize="10sp"/>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>
