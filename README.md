@@ -2,6 +2,16 @@
 
 This application uses the latest version of the Vehicle Bus Library to communicate over Canbus. 
 
+Features:
+- Configure CAN1/CAN2 to a certain bitrate.
+- Use preconfigured filters.
+- Use preconfigured flow controls.
+- Use listen only mode.
+- Use termination.
+- Transmit Canbus frames.
+- Counts the number of received and sent frames and displays them.
+
+
 ### How to Use
 When the app starts, you will be on the Can1 overview fragment.
 
