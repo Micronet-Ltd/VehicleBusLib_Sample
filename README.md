@@ -32,11 +32,8 @@ Sometimes on the Tab8 the ports to communicate over Canbus will not enumerate on
 
 
 ### Adding the Vehicle Bus Library to the Android App 
-To import the library, add the Vehiclebus_api.jar file to the ‘app\libs\ folder’ and the libvehiclebus.so file to the ‘app\src\main\jniLibs\armeabi-v7a’ folder (as shown in the image below). You will need to create the folder jniLibs/armeabi-v7a.  
-
+To import the library, add the Vehiclebus_api.jar file to the ‘app\libs\ folder’ and the libvehiclebus.so file to the ‘app\src\main\jniLibs\armeabi-v7a’ folder. You will need to create the folder jniLibs/armeabi-v7a.  
 Note: These instructions are for the 32 bit version of the library 
-
-![Vehicle Bus Library Path](https://raw.githubusercontent.com/Micronet-Ltd/VehicleBusLib_Sample/master/images/path.png "Vehicle Bus Library Path")
 
 For Android Studio to detect the library files, please the following to the application gradle file:
 * abiFilters "armeabi", "armeabi-v7a", "x86", "mips"
