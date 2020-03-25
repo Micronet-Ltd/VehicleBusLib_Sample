@@ -2,6 +2,8 @@
 
 This application uses the latest version of the Vehicle Bus Library to communicate over Canbus. 
 
+**Note**: To use the Vehicle Bus Library or build this sample app properly, your application must be signed by the platform key.
+
 Features:
 - Configure CAN1/CAN2 to a certain bitrate.
 - Use preconfigured filters.
