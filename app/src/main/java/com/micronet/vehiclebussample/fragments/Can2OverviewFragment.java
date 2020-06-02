@@ -5,6 +5,7 @@
 
 package com.micronet.vehiclebussample.fragments;
 
+import static android.content.Intent.EXTRA_DOCK_STATE_UNDOCKED;
 import static java.lang.Thread.sleep;
 
 import android.arch.lifecycle.Observer;
@@ -639,6 +640,16 @@ public class Can2OverviewFragment extends Fragment {
                         mDockState = intent.getIntExtra(android.content.Intent.EXTRA_DOCK_STATE, -1);
                         updateCradleIgnState();
                         Log.d(TAG, "Dock event received: " + mDockState);
+                        if(mDockState == EXTRA_DOCK_STATE_UNDOCKED) {
+                            if (canTest.isCanInterfaceOpen()) {
+                                Log.d(TAG, "closing CAN2 port since the cradle was undocked");
+                                Toast.makeText(getContext().getApplicationContext(), "closing CAN2 port since the cradle UNDOCK event was received",
+                                        Toast.LENGTH_LONG).show();
+                                closeCan2Interface();
+                            }
+                        }
+                        //Do not reopen Canbus unless initiated by user
+                        reopenCANOnTtyAttachEvent = false;
                         break;
                     case "com.micronet.smarttabsmarthubsampleapp.portsattached":
                         if (reopenCANOnTtyAttachEvent){
@@ -651,6 +662,11 @@ public class Can2OverviewFragment extends Fragment {
                         Log.d(TAG, "Ports attached event received");
                         break;
                     case "com.micronet.smarttabsmarthubsampleapp.portsdetached":
+                        try {
+                            sleep(250);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                         if (canTest.isCanInterfaceOpen()){
                             Log.d(TAG, "closing CAN2 port since the tty port detach event was received");
                             Toast.makeText(getContext().getApplicationContext(), "closing CAN2 port since the tty port detach event was received",
