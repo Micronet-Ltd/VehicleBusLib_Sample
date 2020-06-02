@@ -20,6 +20,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.os.BuildCompat;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -32,7 +33,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.micronet.vehiclebussample.BuildConfig;
+//import com.micronet.vehiclebussample.BuildConfig;
 import com.micronet.vehiclebussample.R;
 
 import com.micronet.vehiclebussample.receivers.DeviceStateReceiver;
@@ -56,8 +57,12 @@ public class AboutFragment extends Fragment {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_about, container, false);
         TextView txtAbout = rootView.findViewById(R.id.txtAppInfo);
-        txtAbout.setText(String.format("Vehicle Bus Library Sample App v%s\n" +
-                "Copyright © 2020 Micronet Inc.", BuildConfig.VERSION_NAME));
+        try {
+            txtAbout.setText(String.format("Vehicle Bus Library Sample App v%s\n" +
+                    "Copyright © 2020 Micronet Inc.", getContext().getPackageManager().getPackageInfo(getContext().getPackageName(),0).versionName));
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
         txtAbout.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
 
         updateInfoText();

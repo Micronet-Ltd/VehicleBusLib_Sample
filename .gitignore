@@ -10,7 +10,7 @@
 gradlew.bat
 
 #micronet files
-tab8platformkey.properties
+micronet-tab8-platform.properties
 micronet-tab8-platform.keystore
 
 /app/gradle/

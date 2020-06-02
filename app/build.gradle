@@ -48,7 +48,7 @@ dependencies {
 
 def props = new Properties()
 
-props.load(new FileInputStream(rootProject.file("tab8platformkey.properties")))
+props.load(new FileInputStream(rootProject.file("micronet-tab8-platform.properties")))
 android.signingConfigs.tab8platformkey.storeFile rootProject.file(props.keyStore)
 android.signingConfigs.tab8platformkey.storePassword props.keyStorePassword
 android.signingConfigs.tab8platformkey.keyAlias props.keyAlias
