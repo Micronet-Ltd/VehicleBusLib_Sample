@@ -26,6 +26,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.micronet.vehiclebussample.R;
+import com.micronet.vehiclebussample.ReadWriteFile;
+import com.micronet.vehiclebussample.Utils;
 import com.micronet.vehiclebussample.fragments.AboutFragment;
 import com.micronet.vehiclebussample.fragments.Can1OverviewFragment;
 import com.micronet.vehiclebussample.fragments.Can2OverviewFragment;
@@ -47,27 +49,48 @@ public class MainActivity extends AppCompatActivity {
     private static int dockState = -1;
 
     private DeviceStateReceiver deviceStateReceiver = new DeviceStateReceiver();
+    private ReadWriteFile readWriteFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, PERMISSION_CODE);
-        } else {
+        Utils.getPermissions(this);
+
+        if(arePermissiosGranted()){
+            //Create a File
+            //Start application
             setupUserInterface();
+        } else {
+            //Permissions are not granted, request for permissions and validate that the permissions are good.
+            Log.e("MainActivity", "Permissions not granted, request for permissions");
+            requestPermissions(new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE}, PERMISSION_CODE);
+            Log.e("MainActivity", "Requested permission granted + " + arePermissiosGranted());
         }
+
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if (requestCode == PERMISSION_CODE && permissions[0].equals(Manifest.permission.READ_PHONE_STATE) && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            setupUserInterface();
-        } else {
-            Toast.makeText(this, "Permissions not granted. Closing.", Toast.LENGTH_LONG).show();
-            finish();
+//        if (requestCode == PERMISSION_CODE && permissions[0].equals(Manifest.permission.READ_PHONE_STATE) && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//            setupUserInterface();
+//        } else {
+//            Toast.makeText(this, "Permissions not granted. Closing.", Toast.LENGTH_LONG).show();
+//            finish();
+//        }
+        if (requestCode == PERMISSION_CODE) {
+            if (permissions.length >0 &&
+                    permissions[0].equals(Manifest.permission.READ_PHONE_STATE) &&
+                    permissions[1].equals(Manifest.permission.WRITE_EXTERNAL_STORAGE) &&
+                    permissions[2].equals(Manifest.permission.READ_EXTERNAL_STORAGE) ) {
+                //Permissions Granted, continue with the app process
+                setupUserInterface();
+            } else {
+                Log.e("MainActivity", "Permissions are not granted by the user. Not starting application. Exiting");
+                Toast.makeText(this, "Permissions not granted. Closing.", Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -139,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-//        adapter.addFragment(new InputOutputsFragment(), "GPIOs");
+        //adapter.addFragment(new InputOutputsFragment(), "GPIOs");
         adapter.addFragment(new Can1OverviewFragment(), "Can1");
         adapter.addFragment(new Can2OverviewFragment(), "Can2");
         adapter.addFragment(new CanBusFramesFragment(), "Can Frames");
@@ -178,4 +201,10 @@ public class MainActivity extends AppCompatActivity {
             mFragmentTitleList.add(title);
         }
     }
+
+    private boolean arePermissiosGranted(){
+        return ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED ;
+    }
+
 }

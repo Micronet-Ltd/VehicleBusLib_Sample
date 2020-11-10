@@ -5,11 +5,8 @@
 
 package com.micronet.vehiclebussample;
 
-import static java.lang.Thread.sleep;
-
 import android.os.SystemClock;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.micronet.canbus.CanbusException;
 import com.micronet.canbus.CanbusFilter;
@@ -17,13 +14,14 @@ import com.micronet.canbus.CanbusFlowControl;
 import com.micronet.canbus.CanbusFramePort1;
 import com.micronet.canbus.CanbusFramePort2;
 import com.micronet.canbus.CanbusFrameType;
-import com.micronet.canbus.CanbusHardwareFilter;
 import com.micronet.canbus.CanbusInterface;
 import com.micronet.canbus.CanbusSocket;
+
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
-import java.util.concurrent.Future;
+
+import static java.lang.Thread.sleep;
 
 public class CanTest {
 
@@ -87,6 +85,9 @@ public class CanTest {
     private boolean enableFlowControl = false;
     private boolean isCanInterfaceOpen = false;
     private boolean discardInBuffer;
+
+    private ReadWriteFile readWriteFile;
+    private static boolean internalTest = true;
 
     public CanTest(int portNumber) {
         //Mandatory constructor
@@ -202,6 +203,13 @@ public class CanTest {
         }
         isCanInterfaceOpen = true;
         startPortThreads();
+        //TODO: Remove me for release to public
+        if(internalTest){
+            if(readWriteFile == null ){
+                readWriteFile = new ReadWriteFile();
+            }
+            readWriteFile.checkLogFolder();
+        }
         return 0;
     }
 
@@ -447,6 +455,9 @@ public class CanTest {
 
                     canbusFrameCount++;
                     canbusByteCount += canBusFrame1.getData().length;
+
+                    readWriteFile.LogCsvToFile(canBusFrame1.toString(), Utils.formatDate(System.currentTimeMillis()));
+
                 }
                 //else {
                 // Log.d(TAG, "Read timeout");
