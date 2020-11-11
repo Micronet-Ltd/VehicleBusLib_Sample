@@ -456,7 +456,7 @@ public class CanTest {
                     canbusFrameCount++;
                     canbusByteCount += canBusFrame1.getData().length;
 
-                    readWriteFile.LogCsvToFile(canBusFrame1.toString(), Utils.formatDate(System.currentTimeMillis()));
+                    readWriteFile.LogCsvToFile(Integer.toHexString(canBusFrame1.getId())+"," + canBusFrame1.getData().length +"," + bytesToHex(canBusFrame1.getData()) + "," +canbusFrameCount, Utils.formatDate(System.currentTimeMillis()));
 
                 }
                 //else {

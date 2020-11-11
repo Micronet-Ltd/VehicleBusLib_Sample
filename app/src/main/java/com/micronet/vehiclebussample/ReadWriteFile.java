@@ -21,7 +21,7 @@ public class ReadWriteFile {
     //Logging the Service activity date
     public void LogCsvToFile(String frame, String timestamp){
         String fileName = "Frames.csv";
-        String header = "Time Stamp, CAN Frames";
+        String header = "Time Stamp, Id, DataLength, Data, FrameCount,";
         String columnSep = ",";
         //String timestamp=(Utils.formatDate(System.currentTimeMillis())); //Getting current time stamp
 
